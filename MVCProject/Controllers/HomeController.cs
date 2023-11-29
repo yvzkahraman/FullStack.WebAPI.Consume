@@ -1,31 +1,31 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MVCProject.ApiServices;
 using MVCProject.Models.ApiModel;
+using Newtonsoft.Json;
 
 namespace MVCProject.Controllers
 {
     public class HomeController : Controller
     {
-        // TPL
+        private readonly ProductApiService productApiService;
+
+        public HomeController(ProductApiService productApiService)
+        {
+            this.productApiService = productApiService;
+        }
+
         public async Task<IActionResult> Index()
         {
-            // HttpClientFactory,
-            //  MULTITASKING MULTITHREADING
-
-            // Veritabanı işlemlerinde, dosya işlemlerinde, s2s call, loglama,
+         
             
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:5246/");
-           var responseMessage =  await client.GetAsync("api/Products");
+            return View(await this.productApiService.GetListAsync());
 
+        }
 
-            //if (responseMessage.IsSuccessStatusCode)
-            //{
-            //    var data = await responseMessage.Content.ReadAsStringAsync();
-            //}
-
-            return View();
-
-
+        public async Task<IActionResult> Update(int id)
+        {
+           var updatedProduct =  await this.productApiService.GetByIdAsync(id);
+            return View(updatedProduct);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,17 @@
+﻿@model ProductResponse
+
+
+<div class="">
+    <form asp-action="Update" asp-controller="Home" method="post" class="w-75 mx-auto p-5">
+       <input  type="hidden" asp-for="Id"/>
+        
+        <div class="mb-3">
+            <input type="text" class="form-control" asp-for="Name" />
+        </div>
+
+
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+    </form>
+</div>
